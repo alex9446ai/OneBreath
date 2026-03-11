@@ -68,7 +68,14 @@ const diffDays = (date1: string, date2: string) => {
   return Math.floor(diffTime / (1000 * 60 * 60 * 24))
 }
 
-const expirationStatus = (almostDays: number, expiration?: string) => {
+type ExpirationStatus = {
+  valid: boolean
+  notfound: boolean
+  expired: boolean
+  almostExpired: boolean
+}
+
+const expirationStatus = (almostDays: number, expiration?: string): ExpirationStatus => {
   if (!expiration) return { valid: false, notfound: true, expired: false, almostExpired: false }
 
   const days = diffDays(getTodayDate(), expiration)
@@ -81,7 +88,15 @@ const expirationStatus = (almostDays: number, expiration?: string) => {
   }
 }
 
-export const userStatusRaw = (certificateExpiration?: string, paymentExpiration?: string) => {
+export type UserStatus = {
+  certificate: ExpirationStatus
+  certificateExpiration?: string
+  payment: ExpirationStatus
+  paymentExpiration?: string
+  global: Omit<ExpirationStatus, 'valid'>
+}
+
+export const userStatusRaw = (certificateExpiration?: string, paymentExpiration?: string): UserStatus => {
   const certificate = expirationStatus(30, certificateExpiration)
   const payment = expirationStatus(10, paymentExpiration)
   return {
