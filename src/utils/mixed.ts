@@ -28,7 +28,7 @@ export const getGroupFromLS = () => getKeyNumInLS('group_id', 1)
 export const setAdminInLS = (adminLevel: number) => setKeyNumInLS('admin_level', adminLevel)
 export const getAdminInLS = () => getKeyNumInLS('admin_level', 0)
 
-export const base64ToUint8Array = (base64String: string): ArrayBuffer => {
+export const base64ToUint8Array = (base64String: string) => {
   const padding = '='.repeat((4 - base64String.length % 4) % 4)
   const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/')
 
@@ -62,7 +62,7 @@ export const getDateLocaleIT = (date: string) => (
   new Date(date).toLocaleDateString('it-IT')
 )
 
-const diffDays = (date1: string, date2: string): number => {
+const diffDays = (date1: string, date2: string) => {
   const diffTime = new Date(date2).getTime() - new Date(date1).getTime()
   return Math.floor(diffTime / (1000 * 60 * 60 * 24))
 }
@@ -74,7 +74,7 @@ type ExpirationStatus = {
   almostExpired: boolean
 }
 
-const expirationStatus = (almostDays: number, expiration?: string): ExpirationStatus => {
+const expirationStatus = (almostDays: number, expiration?: string) => {
   if (!expiration) return { valid: false, notfound: true, expired: false, almostExpired: false }
 
   const days = diffDays(getTodayDate(), expiration)
@@ -95,7 +95,7 @@ export type UserStatus = {
   global: Omit<ExpirationStatus, 'valid'>
 }
 
-export const userStatusRaw = (certificateExpiration?: string, paymentExpiration?: string): UserStatus => {
+export const userStatusRaw = (certificateExpiration?: string, paymentExpiration?: string) => {
   const certificate = expirationStatus(30, certificateExpiration)
   const payment = expirationStatus(10, paymentExpiration)
   return {
