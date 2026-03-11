@@ -13,8 +13,8 @@ const Register = () => {
   const [watchwordValid, setWatchwordValid] = createSignal(false)
   const supabaseClient = useSupabase()
 
-  const createUser = action(async (formData: FormData): Promise<void> => {
-    const formGet = (name: string): string => {
+  const createUser = action(async (formData: FormData) => {
+    const formGet = (name: string) => {
       const value = formData.get(name)
       if (value === null) throw `Missing form field: ${name}`
       return value.toString()
