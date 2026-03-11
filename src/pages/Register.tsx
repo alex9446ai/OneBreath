@@ -13,8 +13,12 @@ const Register = () => {
   const [watchwordValid, setWatchwordValid] = createSignal(false)
   const supabaseClient = useSupabase()
 
-  const createUser = action(async (formData: FormData) => {
-    const formGet = (name: string) => formData.get(name)!.toString()
+  const createUser = action(async (formData: FormData): Promise<void> => {
+    const formGet = (name: string): string => {
+      const value = formData.get(name)
+      if (value === null) throw `Missing form field: ${name}`
+      return value.toString()
+    }
     if (!watchwordValid()) throw 'Parola d\'ordine non valida'
     const groupId = formGet('group')
     const firstName = capwords(formGet('first-name').trim())
