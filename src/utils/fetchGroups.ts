@@ -7,7 +7,7 @@ export type Group = {
 }
 export type Groups = Group[]
 
-export const setGroups = (groups: Groups): void => {
+export const setGroups = (groups: Groups) => {
   Cookies.set('groups_cache', JSON.stringify(groups), { expires: 4 })
 }
 
@@ -19,7 +19,7 @@ export const getGroups = (): Groups => {
   }
 }
 
-export const fetchGroups = async (): Promise<Groups> => {
+export const fetchGroups = async () => {
   const cachedGroups = getGroups()
   if (cachedGroups.length > 0) return cachedGroups
 
@@ -31,13 +31,13 @@ export const fetchGroups = async (): Promise<Groups> => {
   return groups
 }
 
-export const fetchGroup = async (id: number): Promise<Group> => {
+export const fetchGroup = async (id: number) => {
   const group = (await fetchGroups()).find((group) => group.id == id)
   if (!group) throw 'Mismatch with group select'
   return group
 }
 
-export const groupsById = async (): Promise<Record<number, Group>> => {
+export const groupsById = async () => {
   return (await fetchGroups()).reduce((acc, group) => {
     acc[group.id] = group
     return acc
