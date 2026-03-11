@@ -1,11 +1,11 @@
 import Cookies from 'js-cookie'
 import { useSupabase } from './context'
 
-export type Group = {
+type Group = {
   id: number
   name: string
 }
-export type Groups = Group[]
+type Groups = Group[]
 
 export const setGroups = (groups: Groups) => {
   Cookies.set('groups_cache', JSON.stringify(groups), { expires: 4 })
