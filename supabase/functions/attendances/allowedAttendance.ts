@@ -1,4 +1,4 @@
-import { SupabaseClientDB } from '../_shared/shortcut.types.ts'
+import { SupabaseClientDB } from '@shared/shortcut.types.ts'
 import { AttendancesExtra, FunctionReturn } from '../_shared/mixed.types.ts'
 
 const startTime = 16
