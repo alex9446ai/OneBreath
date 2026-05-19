@@ -1,9 +1,9 @@
 import { createClient } from '@supabase/supabase-js'
-import type { Database } from '../_shared/database.types.ts'
-import { corsHeaders } from '../_shared/cors.ts'
-import { jsonResponseMessage } from '../_shared/jsonResponse.ts'
-import { validateUser } from '../_shared/validateUser.ts'
-import { manageRawError } from '../_shared/manageRawError.ts'
+import type { Database } from '@shared/database.types.ts'
+import { corsHeaders } from '@shared/cors.ts'
+import { jsonResponseMessage } from '@shared/jsonResponse.ts'
+import { validateUser } from '@shared/validateUser.ts'
+import { manageRawError } from '@shared/manageRawError.ts'
 
 console.info(`Edge function "leaderboard" up and running!`)
 
