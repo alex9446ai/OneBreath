@@ -1,4 +1,4 @@
-import { createResource, Match, Show, Suspense, Switch, type Component } from 'solid-js'
+import { createMemo, createResource, Match, Show, Suspense, Switch, type Component } from 'solid-js'
 import { getDateLocaleIT } from '../utils/mixed'
 import { useSupabase } from '../utils/context'
 import { getUserId, userStatus } from '../utils/mixed.supabase'
@@ -17,7 +17,7 @@ type ExpirationProps = {
   date: string | undefined
 }
 const ExpirationInfo: Component<ExpirationProps> = (props) => {
-  const date = () => props.date && getDateLocaleIT(props.date)
+  const date = createMemo(() => props.date && getDateLocaleIT(props.date))
 
   return (
     <p>

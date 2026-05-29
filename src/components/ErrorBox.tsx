@@ -1,8 +1,8 @@
-import { Show, type ParentComponent } from 'solid-js'
+import { createMemo, Show, type ParentComponent } from 'solid-js'
 import manageRawError from '../utils/manageRawError'
 
 const ErrorBox: ParentComponent = (props) => {
-  const error_message = () => manageRawError(props.children)
+  const error_message = createMemo(() => manageRawError(props.children))
 
   return (
     <Show when={error_message()}>
