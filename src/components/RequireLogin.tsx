@@ -1,4 +1,4 @@
-import { createSignal, Show, type ParentComponent } from 'solid-js'
+import { createSignal, onMount, Show, type ParentComponent } from 'solid-js'
 import { useNavigate } from '@solidjs/router'
 import { useSupabase } from '../utils/context'
 import LoggedOnMount from './LoggedOnMount'
@@ -8,8 +8,10 @@ const RequireLogin: ParentComponent = (props) => {
   const navigate = useNavigate()
   const supabaseClient = useSupabase()
 
-  supabaseClient.auth.getSession().then(({ data }) => {
-    data.session === null ? navigate('/login') : setLoggedIn(true)
+  onMount(() => {
+    supabaseClient.auth.getSession().then(({ data }) => {
+      data.session === null ? navigate('/login') : setLoggedIn(true)
+    })
   })
 
   return (
