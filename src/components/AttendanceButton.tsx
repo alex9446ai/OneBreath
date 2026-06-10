@@ -1,7 +1,7 @@
 import type { Component } from 'solid-js'
 import { action, useAction, useSubmission } from '@solidjs/router'
 import { useSupabase } from '../utils/context'
-import invokeAttendances from '../utils/invokeAttendances'
+import createInvokeAttendances from '../utils/invokeAttendances'
 import ErrorBox from './ErrorBox'
 
 type AttendanceButtonProps = {
@@ -14,9 +14,10 @@ type AttendanceButtonProps = {
 
 const AttendanceButton: Component<AttendanceButtonProps> = (props) => {
   const supabaseClient = useSupabase()
+  const invokeAttendances = createInvokeAttendances(supabaseClient)
 
   const handleAttendance = action(async () => {
-    const data = await invokeAttendances(supabaseClient, props.action, props.groupId)
+    const data = await invokeAttendances(props.action, props.groupId)
     if (data.code !== 200) throw data.message
     await props.refetch()
     return { ok: true }

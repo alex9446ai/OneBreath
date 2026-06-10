@@ -1,15 +1,13 @@
-import { FunctionsHttpError } from '@supabase/supabase-js'
 import type { LeaderboardExtra, ResponseBody } from '@shared/functions.types'
-import { useSupabase } from './context'
+import type { SupabaseClientDB } from '@shared/shortcut.types'
+import createInvokeFunction from './createInvokeFunction'
 
-const invokeLeaderboard = async ( groupId: number ): Promise<ResponseBody<LeaderboardExtra>> => {
-  const supabaseClient = useSupabase()
-  const { data, error } = await supabaseClient.functions.invoke('leaderboard', {
-    body: { 'group': groupId }
-  })
-  if (error instanceof FunctionsHttpError) return await error.context.json()
-  if (error) throw error
-  return data
+const createInvokeLeaderboard = (supabaseClient: SupabaseClientDB) => {
+  const invoke = createInvokeFunction<ResponseBody<LeaderboardExtra>>('leaderboard', supabaseClient)
+  
+  return async (groupId: number): Promise<ResponseBody<LeaderboardExtra>> => {
+    return invoke({ 'group': groupId })
+  }
 }
 
-export default invokeLeaderboard
+export default createInvokeLeaderboard
