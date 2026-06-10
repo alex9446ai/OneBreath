@@ -1,7 +1,7 @@
 import { createResource, Match, Show, Switch } from 'solid-js'
 import { useSupabase } from '../utils/context'
 import { getGroupFromLS } from '../utils/mixed'
-import invokeAttendances from '../utils/invokeAttendances'
+import createInvokeAttendances from '../utils/invokeAttendances'
 import ErrorBox from './ErrorBox'
 import { DayOfWeek, DaysOfWeek } from './DayOfWeek'
 import GroupName from './GroupName'
@@ -11,9 +11,10 @@ import './Attendance.sass'
 const Attendance = () => {
   const supabaseClient = useSupabase()
   const groupId = getGroupFromLS()
+  const invokeAttendances = createInvokeAttendances(supabaseClient)
 
   const [verify, { refetch }] = createResource(() => (
-    invokeAttendances(supabaseClient, 'verify', groupId)
+    invokeAttendances('verify', groupId)
   ))
 
   return (

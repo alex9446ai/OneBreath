@@ -2,7 +2,7 @@ import { createResource, For, Show, type Component } from 'solid-js'
 import { action, useAction, useSubmission } from '@solidjs/router'
 import { getDateTimeLocaleIT } from '../../../../utils/mixed'
 import { useSupabase } from '../../../../utils/context'
-import invokeBroadcast from '../../../../utils/invokeBroadcast'
+import createInvokeBroadcast from '../../../../utils/invokeBroadcast'
 import Title from '../../../../components/Title'
 import ErrorBox from '../../../../components/ErrorBox'
 import './Subscriptions.sass'
@@ -13,6 +13,7 @@ const getDateOrMessage = (date: string | null) => (
 
 const Subscriptions: Component<{ userId: string }> = (props) => {
   const supabaseClient = useSupabase()
+  const invokeBroadcast = createInvokeBroadcast(supabaseClient)
 
   const [subscriptions] = createResource(async () => {
     const { data: subscriptions, error } = await supabaseClient.from('subscriptions')
@@ -28,7 +29,7 @@ const Subscriptions: Component<{ userId: string }> = (props) => {
   })
 
   const handleTest = action(async () => {
-    const data = await invokeBroadcast(supabaseClient, [props.userId], 'Notifica di test!!')
+    const data = await invokeBroadcast([props.userId], 'Notifica di test!!')
     if (data.code !== 200) throw data.message
     return { ok: true }
   })
