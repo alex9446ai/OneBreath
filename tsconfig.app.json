@@ -21,6 +21,12 @@
       "@shared/*": ["./shared/*"]
     },
 
+    /* Strict type checking */
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+
     /* Linting */
     "noUnusedLocals": true,
     "noUnusedParameters": true,
