@@ -17,7 +17,7 @@ const Subscriptions: Component<{ userId: string }> = (props) => {
   const [subscriptions] = createResource(async () => {
     const { data: subscriptions, error } = await supabaseClient.from('subscriptions')
       .select('last_status_code,last_send_at').eq('user_id', props.userId).order('created_at')
-    if (error) throw error.message
+    if (error) throw error
     return subscriptions.map((sub) => ({
       ...sub,
       last_status_bool: {

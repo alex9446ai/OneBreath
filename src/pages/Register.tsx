@@ -32,7 +32,7 @@ const Register = () => {
         watchword: formManager.getString('watchword')
       }}
     })
-    if (error) throw error.message
+    if (error) throw error
     setGroupInLS(groupId)
     throw redirect('/')
   })

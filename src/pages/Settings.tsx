@@ -18,7 +18,7 @@ const Settings = () => {
   const [leaderboard] = createResource(async () => {
     const { data: profile, error } = await supabaseClient.from('profiles')
       .select('leaderboard').eq('id', await userIdPromise).single()
-    if (error) throw error.message
+    if (error) throw error
     return profile.leaderboard
   })
 
@@ -28,7 +28,7 @@ const Settings = () => {
     const leaderboard = formManager.getBoolean('leaderboard')
     const { error } = await supabaseClient.from('profiles')
       .update({ group_id, leaderboard }).eq('id', await userIdPromise)
-    if (error) throw error.message
+    if (error) throw error
     setGroupInLS(group_id)
     throw redirect('/')
   })

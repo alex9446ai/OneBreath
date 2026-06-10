@@ -7,7 +7,7 @@ const LogoutButton = () => {
 
   const logout = action(async () => {
     const { error } = await supabaseClient.auth.signOut()
-    if (error) throw error.message
+    if (error) throw error
     throw redirect('/login')
   })
   const useLogout = useAction(logout)

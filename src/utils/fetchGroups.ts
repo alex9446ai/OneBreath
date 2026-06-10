@@ -20,7 +20,7 @@ export const fetchGroups = async () => {
   const supabaseClient = useSupabase()
   const { data: groups, error } = await supabaseClient.from('groups')
     .select('id,name').order('id')
-  if (error) throw error.message
+  if (error) throw error
   setGroups(groups)
   return groups
 }

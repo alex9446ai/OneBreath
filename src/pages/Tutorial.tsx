@@ -28,7 +28,7 @@ const Tutorial = () => {
   const getSignedUrl = async (filename: string) => {
     const { data, error } = await supabaseClient.storage.from('video-tutorial')
       .createSignedUrl(filename, 900) // 15 minutes
-    if (error) throw error.message
+    if (error) throw error
     return data.signedUrl
   }
 

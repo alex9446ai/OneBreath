@@ -15,7 +15,7 @@ const UploadCertificate = () => {
 
   const [bucketMetadata] = createResource(async () => {
     const { data, error } = await supabaseClient.storage.getBucket('certificates')
-    if (error) throw error.message
+    if (error) throw error
     return {
       allowedMimeTypes: data.allowed_mime_types?.join(', ') ?? '',
       fileSizeLimitInMB: (data.file_size_limit ?? 0) / ByteMultiple / ByteMultiple
@@ -30,11 +30,11 @@ const UploadCertificate = () => {
 
     const { data, error: uploadError } = await supabaseClient.storage.from('certificates')
       .upload(userId, file, { upsert: true })
-    if (uploadError) throw uploadError.message
+    if (uploadError) throw uploadError
 
     const { error: upsertError } = await supabaseClient.from('certificates')
       .upsert({ object_id: data.id, user_id: userId, expiration: date })
-    if (upsertError) throw upsertError.message
+    if (upsertError) throw upsertError
 
     return { ok: true }
   })

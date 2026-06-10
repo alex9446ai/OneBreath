@@ -31,7 +31,7 @@ const sendToServer = async (supabaseClient: SupabaseClientDB,
   const { error } = await supabaseClient.from('subscriptions').insert([
     { user_id: userId, subscription_json: subscription.toJSON() as Json }
   ])
-  if (error) throw error.message
+  if (error) throw error
 }
 
 export const subscribeUser = async (supabaseClient: SupabaseClientDB) => {
@@ -62,7 +62,7 @@ export const silentSubscriptionUpdate = async (supabaseClient: SupabaseClientDB)
       try {
         await sendToServer(supabaseClient, subscription)
       } catch (error) {
-        if (typeof error !== 'string' || !error.includes('duplicate key')) throw error
+        if (!(error instanceof Error) || !error.message.includes('duplicate key')) throw error
       }
       localStorage.setItem('subscriptionHash', subscriptionHash)
     } else if (Notification.permission === 'granted') {
