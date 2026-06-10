@@ -17,7 +17,7 @@ const ForgottenPassword = () => {
       formManager.getString('email'),
       { redirectTo: `${import.meta.env.VITE_SITE_URL}/settings/changepassword?reset` }
     )
-    if (error) throw error.message
+    if (error) throw error
     setSuccess(true)
   })
   const submission = useSubmission(sendReset)

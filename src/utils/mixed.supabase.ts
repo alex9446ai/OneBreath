@@ -5,8 +5,8 @@ import { groupsById } from './fetchGroups'
 
 export const getUserId = async (supabaseClient: SupabaseClientDB) => {
   const { data: { session }, error } = await supabaseClient.auth.getSession()
-  if (error) throw error.message
-  if (!session) throw 'session is null'
+  if (error) throw error
+  if (!session) throw new Error('session is null')
   return session.user.id
 }
 
@@ -17,8 +17,8 @@ export const fillLocalStorage = async (supabaseClient: SupabaseClientDB, userId:
     .select('level').eq('id', userId).maybeSingle()
   const [profile, admin] = await Promise.all([profileProm, adminProm])
 
-  if (profile.error) throw profile.error.message
-  if (admin.error) throw admin.error.message
+  if (profile.error) throw profile.error
+  if (admin.error) throw admin.error
 
   setGroupInLS(profile.data.group_id)
   setAdminInLS(admin.data?.level ?? 0)
@@ -31,7 +31,7 @@ type ContactByZone = {
 export const contactsByZone = async (supabaseClient: SupabaseClientDB) => {
   const { data: contacts, error } = await supabaseClient.from('sportexam_contacts')
     .select('name,phone_number,notes,zone').order('id')
-  if (error) throw error.message
+  if (error) throw error
 
   return contacts.reduce((acc, contact) => {
     const existingIndex = acc.findIndex((c) => c.zone === contact.zone)
@@ -90,7 +90,7 @@ export const getCertificateUrl = async (supabaseClient: SupabaseClientDB,
 export const downloadCertificate = async (supabaseClient: SupabaseClientDB,
                                           path: string, downloadName?: string) => {
   const { data, error } = await supabaseClient.storage.from('certificates').download(path)
-  if (error) throw error.message
+  if (error) throw error
   return downloadBlob(data, downloadName ?? path.split('/').pop() ?? path)
 }
 

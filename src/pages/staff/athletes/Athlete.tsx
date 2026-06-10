@@ -41,7 +41,7 @@ const Athlete: Component<AthleteProps> = (props) => {
     const { error } = await supabaseClient.from('admins').insert([
       { id: props.profile.id, added_by: currentAdminId }
     ])
-    if (error) throw error.message
+    if (error) throw error
     await props.adminsRefetch()
     return { ok: true }
   })

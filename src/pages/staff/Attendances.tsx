@@ -23,7 +23,7 @@ const Attendances = () => {
   const [attendances, {mutate}] = createResource(options, async ({ group, date }) => {
     const { data: attendances, error } = await supabaseClient.from('attendances_with_name')
       .select('user_id,name').eq('group_id', group).eq('marked_day', date)
-    if (error) throw error.message
+    if (error) throw error
     return attendances
   })
 

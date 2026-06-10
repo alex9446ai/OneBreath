@@ -23,7 +23,7 @@ const PoolPayment = () => {
     const userId = await getUserId(supabaseClient)
     const { error } = await supabaseClient.from('payments')
       .upsert({ user_id: userId, expiration: nextDeadline() })
-    if (error) throw error.message
+    if (error) throw error
     return { ok: true }
   })
   const useUpsertPayment = useAction(upsertPayment)

@@ -12,7 +12,7 @@ const UserAttendances: Component<{ id?: string }> = (props) => {
     const userId = props.id ?? await getUserId(supabaseClient)
     const { data: attendances, error } = await supabaseClient.from('pretty_attendances')
       .select('marked_day,group_name').eq('user_id', userId)
-    if (error) throw error.message
+    if (error) throw error
     return attendances
   })
 

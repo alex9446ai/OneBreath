@@ -12,7 +12,7 @@ const Groups = () => {
   const [groups] = createResource(async () => {
     const { data: groups, error } = await supabaseClient.from('groups')
       .select('name,days_of_week').order('id')
-    if (error) throw error.message
+    if (error) throw error
     return groups
   })
 

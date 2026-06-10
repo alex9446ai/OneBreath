@@ -10,7 +10,7 @@ const MidweekHolidays = () => {
 
   const [midweek_holidays] = createResource(async () => {
     const { data, error } = await supabaseClient.from('midweek_holidays').select('date')
-    if (error) throw error.message
+    if (error) throw error
     return data.map((d) => d.date)
   })
 

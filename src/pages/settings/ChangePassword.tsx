@@ -25,7 +25,7 @@ const ChangePassword = () => {
     const { error } = await supabaseClient.auth.updateUser({
       password: formManager.getString('password')
     })
-    if (error) throw error.message
+    if (error) throw error
     setSuccess(true)
   })
   const submission = useSubmission(setNewPassword)

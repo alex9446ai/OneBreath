@@ -28,7 +28,7 @@ const Certificates = () => {
 
     const { data: certificates, error } = await supabaseClient.from('certificates')
       .select('user_id,expiration')
-    if (error) throw error.message
+    if (error) throw error
     return certificates.map((certificate): Certificate => ({
       ...certificate,
       athleteName: namesById.get(certificate.user_id) ?? certificate.user_id
